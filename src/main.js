@@ -24,7 +24,7 @@ class Issue {
 
         // Delete button
         this.deleteButton = document.createElement("button");
-        this.deleteButton.className = "btn btn-secondary";
+        this.deleteButton.className = "btn btn-secondary delete-issue-btn";
         this.deleteButton.id = "delete-issue-btn";
         this.deleteButton.type = "button";
         this.deleteButton.textContent = "Удалить";
@@ -65,7 +65,7 @@ function showNewIssueInput(input) {
 // Renumber indexes
 function refreshIndexes() {
     issues.forEach((issue, i) => {
-        issues.setIndex(i + 1);
+        issue.setIndex(i + 1);
     });
 }
 
