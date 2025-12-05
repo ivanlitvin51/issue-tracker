@@ -1,12 +1,13 @@
 const addIssueButton = document.getElementById("add-issue-button");
-const issuesList = document.getElementById("issues-list");
-const issues = [];
+const issuesRoot = document.getElementById("issues-list");
+const issuesList = [];
 
 // Issue
 class Issue {
-    constructor(text) {
+    constructor(text, onDelete) {
         this.text = text;
-        this.index = issues.length + 1;
+        this.onDelete = onDelete;
+        this.index = 0;
 
         // Create element
         this.element = document.createElement("li");
@@ -48,13 +49,24 @@ class Issue {
 
     // Delete
     delete() {
-        this.element.remove();
-
-        const indexInIssuesList = issues.indexOf(this);
-        issues.splice(indexInIssuesList, 1);
-
-        refreshIndexes();
+        this.onDelete(this);
     }
+}
+
+// Delete issue
+function onDelete(issue) {
+    const index = issuesList.indexOf(issue);
+    issuesList.splice(index, 1);
+    renderIssues(issuesList, issuesRoot);
+}
+
+// Render issues
+function renderIssues(issues, root) {
+    root.innerHTML = "";
+    issues.forEach((issue) => {
+        root.appendChild(issue.element);
+    });
+    refreshIndexes(issues);
 }
 
 // Timeout show input
@@ -63,7 +75,7 @@ function showNewIssueInput(input) {
 }
 
 // Renumber indexes
-function refreshIndexes() {
+function refreshIndexes(issues) {
     issues.forEach((issue, i) => {
         issue.setIndex(i + 1);
     });
@@ -74,7 +86,7 @@ function newIssue() {
     let newIssueInput = document.createElement("input");
     newIssueInput.type = "text";
     newIssueInput.className = "issue-input";
-    issuesList.appendChild(newIssueInput);
+    issuesRoot.appendChild(newIssueInput);
     showNewIssueInput(newIssueInput);
 
     newIssueInput.focus();
@@ -83,18 +95,21 @@ function newIssue() {
         const text = newIssueInput.value.trim();
         if (event.key === "Enter") {
             if (text.trim() === "") {
-                issuesList.removeChild(newIssueInput);
+                issuesRoot.removeChild(newIssueInput);
                 return;
             }
-            const issue = new Issue(text);
-            issues.push(issue);
-
-            issuesList.replaceChild(issue.element, newIssueInput);
-            refreshIndexes();
+            createIssue(text, issuesList, issuesRoot, newIssueInput);
 
             return;
         }
     });
+}
+
+function createIssue(text, issues, root, input) {
+    let issue = new Issue(text, onDelete);
+    issues.push(issue);
+    root.removeChild(input);
+    renderIssues(issues, root);
 }
 
 addIssueButton.addEventListener("click", newIssue);
