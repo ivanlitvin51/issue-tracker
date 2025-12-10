@@ -38,3 +38,21 @@
 .delete-issue-btn {
     margin-left: 15px;
 }
+
+.issues-title {
+    margin-left: 15px;
+    margin-top: 15px;
+    font-family: "Arial";
+    font-size: large;
+}
+
+.issue-done .issue-text {
+    text-decoration: line-through;
+    opacity: 0.6;
+}
+
+.issue-checkbox {
+    margin-left: 15px;
+    transform: scale(1.4);
+    cursor: pointer;
+}

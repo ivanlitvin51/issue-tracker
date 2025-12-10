@@ -8,11 +8,13 @@
     <title>Issue Tracker</title>
 </head>
 <body>
+
     <header>
         <div class="main-header-text">
             <h1>Issue tracker</h1>
         </div>
     </header>
+
     <main>
         <div id="add-issue" class="dropdown">
             <button type="button" id="add-issue-button" class="btn btn-outline-dark">Добавить задачу</button>
@@ -20,9 +22,13 @@
                 <input type="text" class="form-control" placeholder="Введите текст">
             </div>
         </div>
-        <ul id="issues-list" class="list-group">Список проблем
+        <h2 class="issues-title">Список проблем:</h2>
+
+        <ul id="issues-list" class="list-group">
+            <!-- сюда скрипт будет добавлять li -->
         </ul>
     </main>
+
     <footer id="footer">
         © 2025 Issue Tracker
     </footer>
